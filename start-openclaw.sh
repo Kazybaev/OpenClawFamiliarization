@@ -44,11 +44,16 @@ fi
 
 "$OPENCLAW_BIN" plugins enable google || true
 "$OPENCLAW_BIN" channels add --channel telegram --use-env --name telegram
+"$OPENCLAW_BIN" channels add --channel whatsapp --name whatsapp
 "$OPENCLAW_BIN" models set "$DEFAULT_MODEL"
 "$OPENCLAW_BIN" config set session.dmScope per-channel-peer
 "$OPENCLAW_BIN" config set tools.profile coding
 "$OPENCLAW_BIN" config set channels.telegram.dmPolicy open
 "$OPENCLAW_BIN" config set channels.telegram.allowFrom '["*"]' --strict-json
+"$OPENCLAW_BIN" config set channels.whatsapp.dmPolicy open
+"$OPENCLAW_BIN" config set channels.whatsapp.allowFrom '["*"]' --strict-json
+"$OPENCLAW_BIN" config set channels.whatsapp.groupPolicy disabled
+"$OPENCLAW_BIN" config unset channels.whatsapp.groupAllowFrom || true
 
 if command -v systemctl >/dev/null 2>&1; then
   systemctl --user import-environment \
@@ -68,4 +73,10 @@ Telegram pairing:
 2. Run: openclaw pairing list telegram
 3. Run: openclaw pairing approve telegram <CODE>
 4. Send a test message to the bot.
+
+WhatsApp pairing:
+1. Run: openclaw channels login --channel whatsapp
+2. Open WhatsApp on your phone.
+3. Go to Linked Devices and scan the QR code.
+4. Run: openclaw channels status
 NEXT
